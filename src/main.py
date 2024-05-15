@@ -29,6 +29,9 @@ while True:
         # Draw text with the QR code data
         cv2.putText(img, data, (int(bbox[0][0]), int(bbox[0][1]) - 10), cv2.FONT_HERSHEY_SIMPLEX,
                     1, (255, 250, 120), 2)
+
+        print(data)
+
         # Below prints the found data to the below terminal (This we can easily expand on to capture the data to an Excel Sheet)
         # You can also add content to before the pass. Say the system reads red it'll activate a Red LED and the same for Green.
         if data:
