@@ -58,7 +58,7 @@ class Epreuve(Base):
     nom = Column(String, nullable=False)
 
 class Photo(Base):
-    __tablename__ = 'epreuve'
+    __tablename__ = 'photo'
 
     id_photo = Column(Integer, primary_key=True, index=True)
     id_cavalier = Column(Integer, index=True)
