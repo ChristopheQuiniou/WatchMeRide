@@ -22,10 +22,10 @@ const Photos = () => {
                                 <input className='rounded-lg ' type='date' />
                             </div>
                             <div  className='grid grid-rows-2 grid-flow-col'>
-                                <label>Date</label>
+                                <label>De</label>
                                 <input className='rounded-lg ' type='time' />
                             </div><div  className='grid grid-rows-2 grid-flow-col'>
-                                <label>Date</label>
+                                <label>À</label>
                                 <input className='rounded-lg ' type='time' />
                             </div>
                             <div className="w-full grid grid-cols-2 gap-4">
