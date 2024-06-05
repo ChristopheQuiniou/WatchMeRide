@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 
 
 from models import db, Cavalier
-from resource import CavalierResource, CompetitionResource, ClubResource, ChevalResource, CoachResource, EpreuveResource, PhotoResource
+from resource import CavalierResource, CompetitionResource, ClubResource, ChevalResource, CoachResource, EpreuveResource, PhotoResource, ParticipantResource
 from schemas import ma
 
 app = Flask(__name__)
@@ -24,7 +24,7 @@ api.add_resource(ChevalResource, '/chevaux', '/chevaux/<int:Cheval_id>')
 api.add_resource(CoachResource, '/coach', '/coach/<int:coach_id>')
 api.add_resource(EpreuveResource, '/epreuves', '/epreuves/<int:epreuve_id>')
 api.add_resource(PhotoResource, '/photos', '/photos/<int:photo_id>')
-
+api.add_resource(ParticipantResource, '/participants')
 
 migrate = Migrate(app, db)
 

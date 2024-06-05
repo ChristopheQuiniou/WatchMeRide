@@ -4,8 +4,8 @@ from flask import request
 from flask_restful import Resource
 from marshmallow import ValidationError
 
-from models import Cavalier, Competition, db, Club, Cheval, Coach, Epreuve, Photo
-from schemas import CavalierSchema, CompetitionSchema, ClubSchema, ChevalSchema, CoachSchema, EpreuveSchema, PhotoSchema
+from models import Cavalier, Competition, db, Club, Cheval, Coach, Epreuve, Photo, Participant
+from schemas import CavalierSchema, CompetitionSchema, ClubSchema, ChevalSchema, CoachSchema, EpreuveSchema, PhotoSchema, ParticipantSchema
 
 
 class CavalierResource(Resource):
@@ -338,3 +338,56 @@ class PhotoResource(Resource):
         else:
             all_photo = Photo.query.all()
             return self.photos_list_schema.dump(all_photo)
+
+
+class PhotoResource(Resource):
+    photos_schema = PhotoSchema()
+    photos_list_schema = PhotoSchema(many=True)
+    photo_pacth_schema = PhotoSchema(partial=True)
+
+    def get(self, id_photo=None):
+        if id_photo:
+            photo = Image.query.get_or_404(id_photo)
+            return self.photos_schema.dump(photo)
+        else:
+            all_photo = Photo.query.all()
+            return self.photos_list_schema.dump(all_photo)
+
+    def post(self):
+        try:
+            new_photo = self.photos_schema.load(request.json)
+        except ValidationError as err:
+            return {"Message": "Validation error", "errors": err.messages}, 404
+        new_photo = Photo(
+            id_photo = new_photo['id_photo'],
+            id_cavalier = new_photo['id_cavalier'],
+            url_photo = new_photo['url_photo'],
+        )
+        db.session.add(new_photo)
+        db.session.commit()
+        return self.photos_schema.dump(new_photo)
+
+
+class ParticipantResource(Resource):
+    participant_schema = ParticipantSchema()
+    participant_list_schema = ParticipantSchema(many=True)
+    participant_pacth_schema = ParticipantSchema(partial=True)
+
+    def get(self):
+        participants = Participant.query.all()
+        return self.participant_schema.dump(participants)
+
+    def post(self):
+        try:
+            new_participant_data = self.participant_schema.load(request.json)
+        except ValidationError as err:
+            return {"Message": "Validation error", "errors": err.messages}, 404
+        new_participant = Participant(
+            id_cavalier = new_participant_data['id_cavalier'],
+            id_cheval = new_participant_data['id_cheval'],
+            id_coach = new_participant_data['id_coach'],
+            id_club = new_participant_data['id_club']
+        )
+        db.session.add(new_participant)
+        db.session.commit()
+        return self.participant_schema.dump(new_participant)

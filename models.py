@@ -63,3 +63,10 @@ class Photo(Base):
     id_photo = Column(Integer, primary_key=True, index=True)
     id_cavalier = Column(Integer, index=True)
     url_photo = Column(String, nullable=False)
+class Participant(Base):
+    __tablename__ = 'participant'
+
+    id_cavalier = Column(Integer, primary_key=True, index=True)
+    id_cheval = Column(Integer, primary_key=True, index=True)
+    id_coach = Column(Integer, primary_key=True, index=True)
+    id_club = Column(Integer, primary_key=True, index=True)
