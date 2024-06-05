@@ -5,7 +5,7 @@ const Card = () => {
         
 
 <div class=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 border-solid border-1 border-gray-600">
-    <a href="#">
+    <a href="/DetailCompetition">
         <img class="rounded-t-lg filter grayscale hover:grayscale-0" src="https://www.roscoff-tourisme.com/uploads/2019/05/equipole-pays-landivisiau-1.jpg" alt="" />
     </a>
     <div class="p-5">

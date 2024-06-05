@@ -7,6 +7,7 @@ import DetailCompetition from './pages/DetailCompetition';
 import NouvelleEpreuve from './pages/NouvelleEpreuve';
 import Photos from './pages/Photos';
 import AjouterParticipant from './pages/AjouterParticipant';
+import AjouterCompetition from './pages/AjouterCompetition';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/Competitions" element={<Competitions/>} />
           <Route path="/NouvelleEpreuve" element={<NouvelleEpreuve/>} />
           <Route path="/AjouterParticipant" element={<AjouterParticipant/>} />
+          <Route path="/AjouterCompetition" element={<AjouterCompetition/>} />
           <Route path="/Photos" element={<Photos/>} />
           <Route path="/DetailCompetition" element={<DetailCompetition/>} />
           <Route path="*" element={<Accueil/>} />

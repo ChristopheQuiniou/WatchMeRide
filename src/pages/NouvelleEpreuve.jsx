@@ -4,7 +4,7 @@ const NouvelleEpreuve = () => {
     return (
         <div className='p-8'>
             <div>
-                <h1>Nouvelle épreuve</h1>
+                <h1 className='p-8 text-black'>Nouvelle épreuve</h1>
 
             </div>
             
