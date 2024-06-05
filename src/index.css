@@ -1,5 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto,Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -15,19 +19,20 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #091008;
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #579C4C;
 }
 
 body {
   margin: 0;
-  display: flex;
+  /*display: flex;*/
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-family: 'Roboto';
 }
 
 h1 {
@@ -47,7 +52,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #579C4C;
 }
 button:focus,
 button:focus-visible {
@@ -60,7 +65,7 @@ button:focus-visible {
     background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    color: #579C4C;
   }
   button {
     background-color: #f9f9f9;
