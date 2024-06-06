@@ -93,9 +93,8 @@ class CompetitionResource(Resource):
             nom=new_competition_data['nom'],
             date=new_competition_data['date'],
             lieu=new_competition_data['lieu'],
-            nb_Cheval=new_competition_data['nb_Cheval'],
-            debut=new_competition_data['debut'],
-            fin=new_competition_data['fin'],
+            nb_Participant=new_competition_data['nb_Participant'],
+            Image=new_competition_data['Image']
         )
         db.session.add(new_competition)
         db.session.commit()
@@ -113,6 +112,20 @@ class CompetitionResource(Resource):
                 setattr(competition, key, value)
         db.session.commit()
         return self.competition_schema.dump(competition)
+
+    def patch(self, competition_id):
+        try:
+            new_competition_data = self.competition_patch_schema.load(request.json)
+        except ValidationError as err:
+            return {"Message": "Validation error", "errors": err.messages}, 404
+        competition = Competition.query.get_or_404(competition_id)
+        for key, value in new_competition_data.items():
+            if value is not None:
+                setattr(competition, key, value)
+        db.session.commit()
+        return self.competition_schema.dump(competition)
+
+
     def delete(self, competition_id):
         competition = Competition.query.get_or_404(competition_id)
         db.session.delete(competition)
@@ -290,6 +303,7 @@ class EpreuveResource(Resource):
         new_epreuve = Epreuve(
             id=new_epreuve_data['id'],
             nom=new_epreuve_data['nom'],
+            id_competition=new_epreuve_data['id_competition'],
         )
         db.session.add(new_epreuve)
         db.session.commit()

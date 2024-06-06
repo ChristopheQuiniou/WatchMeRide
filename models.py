@@ -1,6 +1,8 @@
+from typing import List
+
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Float, Integer, String
-from sqlalchemy.orm import declarative_base
+from sqlalchemy import Column, Float, Integer, String, ForeignKey
+from sqlalchemy.orm import declarative_base, backref, relationship, Mapped, mapped_column, Relationship
 
 Base = declarative_base()
 
@@ -16,8 +18,9 @@ class Competition(Base):
     date = Column(String, nullable=False)
     lieu = Column(String, nullable=False)
     nb_Participant = Column(Integer, nullable=False)
-    debut = Column(Integer, nullable=True)
-    fin = Column(Integer, nullable=True)
+    Image = Column(String, nullable=True)
+    epreuves = relationship("Epreuve", backref="competition", lazy="dynamic")
+    #fin = Column(Integer, nullable=True)
 
 class Cavalier(Base):
 
@@ -56,6 +59,7 @@ class Epreuve(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     nom = Column(String, nullable=False)
+    id_competition = Column(Integer, ForeignKey('competition.id', name="Competition_ID_FK"), nullable=False)
 
 class Photo(Base):
     __tablename__ = 'photo'
