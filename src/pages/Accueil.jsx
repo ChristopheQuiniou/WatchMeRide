@@ -1,14 +1,37 @@
 import React from 'react';
-import Hero from '../composants/Hero';
+import Home from '../assets/Home.gif';
+import Pic1 from '../assets/Pic.png';
+import SecondPic from '../assets/SecondPic.png';
+
 
 
 const Accueil = () => {
     
     return (
         <div className=''>
-            <Hero />
+            <div className='w-full h-[700px] relative'>
+                <img className='w-full h-[700px] object-cover blur-sm ' src={Home} alt="Cover" />
+                <div className='absolute p-40 top-0 left-0 w-full h-full bg-gradient-to-b from-[#000F05]  to-[#000F05] opacity-90 flex justify-end items-center grid grid-cols-2'>
+                    <div className=' justify-end items-center'>
+                        <h1 className=' text-white text-7xl font-bold place-items-center'>Watch me ride</h1>
+                        <p className='text-white text-xl leading-9'>
+                        Découvrez une nouvelle façon révolutionnaire de capturer et d'immortaliser les moments magiques de l'équitation avec notre système de captation automatique innovant!
+                        </p>
+                        <button
+                                    type='button'
+                                    className='my-4 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-yellow-500  hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900'
+                                    >
+                                    Demander un devis
+                        </button>
+
+                    </div>
+                </div>
+
+
+
+            </div>
             
-            <div class="grid grid-cols-2 grid-flow-col gap-12 p-40">
+            <div class="grid grid-cols-2 grid-flow-col gap-12 p-40 item-center">
                 <div className=''>               
                     <h1 className='text-black'>Lorem ipsum dolor </h1>
                     <p className='py-8 text-black'>
@@ -31,7 +54,7 @@ const Accueil = () => {
 
                 <div>
                     
-                    <img className="h-auto max-w-full" src="https://www.roscoff-tourisme.com/uploads/2019/05/equipole-pays-landivisiau-1.jpg" alt="image description" />
+                    <img className="h-auto max-w-full" src={Pic1} alt="image description" />
 
                 </div>
             </div>
@@ -41,7 +64,7 @@ const Accueil = () => {
 
                 <div>
                     
-                    <img className="h-auto max-w-full" src="https://www.roscoff-tourisme.com/uploads/2019/05/equipole-pays-landivisiau-1.jpg" alt="image description" />
+                    <img className="h-auto max-w-full" src={SecondPic} alt="image description" />
 
                 </div>
 

@@ -44,7 +44,7 @@ const Photos = () => {
                             <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
                                 <button
                                     type='button'
-                                    className='my-4 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-yellow-500  hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 w-full'
+                                    className='inline-flex justify-center items-center  px-5 text-base font-medium text-center text-white rounded-lg bg-yellow-500  hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 w-full h-3/5'
                                     >
                                     Télécharger les photos
                                 </button>

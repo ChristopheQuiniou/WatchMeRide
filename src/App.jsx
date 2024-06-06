@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from './composants/Header';
+import Footer from './composants/Footer';
 import Accueil from "./pages/Accueil";
 import Competitions from './pages/Competitions';
 import DetailCompetition from './pages/DetailCompetition';
@@ -26,6 +27,7 @@ function App() {
           <Route path="*" element={<Accueil/>} />
         </Routes>
       </BrowserRouter>
+      <Footer/>
     </div>
   );
 }
