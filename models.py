@@ -59,12 +59,12 @@ class Epreuve(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     nom = Column(String, nullable=False)
-    id_competition = Column(Integer, ForeignKey('competition.id', name="Competition_ID_FK"), nullable=False)
+    id_competition = Column(Integer, ForeignKey('competition.id', name="Competition_ID_FK"), primary_key=True, nullable=False)
 
 class Photo(Base):
     __tablename__ = 'photo'
 
-    id_photo = Column(Integer, primary_key=True, index=True)
+    id_photo = Column(Integer, primary_key=True, index=True, autoincrement=True)
     id_cavalier = Column(Integer, index=True)
     url_photo = Column(String, nullable=False)
 class Participant(Base):

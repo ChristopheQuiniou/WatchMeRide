@@ -5,3 +5,5 @@ flask-marshmallow
 flask-migrate
 marshmallow-sqlalchemy
 flask-mysql
+PyMuPDF
+pandas

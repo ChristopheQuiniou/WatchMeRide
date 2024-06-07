@@ -300,14 +300,15 @@ class EpreuveResource(Resource):
             new_epreuve_data = self.epreuve_schema.load(request.json)
         except ValidationError as err:
             return {"Message": "Validation error", "errors": err.messages}, 404
-        new_epreuve = Epreuve(
-            id=new_epreuve_data['id'],
-            nom=new_epreuve_data['nom'],
-            id_competition=new_epreuve_data['id_competition'],
-        )
-        db.session.add(new_epreuve)
-        db.session.commit()
-        return self.epreuve_schema.dump(new_epreuve)
+        for epreuve_data in new_epreuve_data:
+            new_epreuve = Epreuve(
+                id=epreuve_data['id'],
+                nom=epreuve_data['nom'],
+                id_competition=epreuve_data['id_competition'],
+            )
+            db.session.add(new_epreuve)
+            db.session.commit()
+        return self.epreuve_schema.dump("Epreuve(s) Enregistrée(s) avec succès")
 
     def put(self, epreuve_id):
         try:

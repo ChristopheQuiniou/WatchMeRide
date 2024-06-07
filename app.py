@@ -3,11 +3,12 @@ from flask import Flask, render_template
 from flask_restful import Api
 from flask_migrate import Migrate
 
-
-
+from functions.uploadFile import uploadFileResource
 from models import db, Cavalier
 from resource import CavalierResource, CompetitionResource, ClubResource, ChevalResource, CoachResource, EpreuveResource, PhotoResource, ParticipantResource
 from schemas import ma
+import requests
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///watchMeRide.db'
@@ -26,7 +27,11 @@ api.add_resource(EpreuveResource, '/epreuves', '/epreuves/<int:epreuve_id>')
 api.add_resource(PhotoResource, '/photos', '/photos/<int:photo_id>')
 api.add_resource(ParticipantResource, '/participants')
 
+api.add_resource(uploadFileResource, '/uploadFile')
+
 migrate = Migrate(app, db)
+
+
 
 with app.app_context():
     db.create_all()
