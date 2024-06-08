@@ -5,9 +5,9 @@ import Footer from './composants/Footer';
 import Accueil from "./pages/Accueil";
 import Competitions from './pages/Competitions';
 import DetailCompetition from './pages/DetailCompetition';
-import NouvelleEpreuve from './pages/NouvelleEpreuve';
+import AjouterEpreuve from './pages/AjouterEpreuve';
 import Photos from './pages/Photos';
-import AjouterParticipant from './pages/AjouterParticipant';
+import AjouterParticipant from './pages/AjouterEpreuve';
 import AjouterCompetition from './pages/AjouterCompetition';
 import DetailEpreuve from './pages/DetailEpreuve';
 
@@ -20,7 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Accueil/>} />
           <Route path="/Competitions" element={<Competitions/>} />
-          <Route path="/NouvelleEpreuve" element={<NouvelleEpreuve/>} />
+          <Route path="/AjouterEpreuve" element={<AjouterEpreuve/>} />
           <Route path="/AjouterParticipant" element={<AjouterParticipant/>} />
           <Route path="/AjouterCompetition" element={<AjouterCompetition/>} />
           <Route path="/Photos" element={<Photos/>} />

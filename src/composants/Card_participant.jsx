@@ -16,7 +16,7 @@ const Card_participant = () => {
                 </div>
                 <div className='grid grid-cols-2 gap-2'>
                     <button
-                        class="bg-black text-white py-3 px-6 text-lg leading-5 tracking-tight font-semibold h-[44px] flex items-center grid grid-cols-2 gap-1">
+                        class="bg-black text-white py-3 px-6 text-lg leading-5 tracking-tight font-semibold h-[44px] flex items-center">
                             <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_201_899)">
                             <path d="M2.5 0V20L18.2143 10L2.5 0Z" fill="white"/>
@@ -27,17 +27,16 @@ const Card_participant = () => {
                             </clipPath>
                             </defs>
                             </svg>
-
-                        Demarrer
+                        <span className='ms-4'>Demarrer</span>
                     </button>
                     <button
-                        class="bg-white text-[#858386] py-3 px-6 text-lg leading-5 tracking-tight font-semibold h-[44px] flex items-center border-[#858386] grid grid-cols-2 gap-1">
+                        class="bg-white text-[#858386] py-3 px-6 text-lg leading-5 tracking-tight font-semibold h-[44px] flex items-center border-[#858386] ">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="20" height="20" fill="#858386"/>
                             </svg>
 
-
-                        Arrêter
+                            <span className='ms-4'>Arrêter</span>
+                        
                     </button>
 
                 </div>

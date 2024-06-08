@@ -3,7 +3,7 @@ import logoWMR from '../assets/logoWMR.svg';
 
 const Header = () => {
     return (
-    <div classNameName="w-full">
+    <div className="w-full">
         <header>
             <nav className="bg-white w-full border-gray-200 dark:bg-gray-900 drop-shadow-md">
                 <div className="flex flex-wrap items-center justify-between mx-auto px-4">

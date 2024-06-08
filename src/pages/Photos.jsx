@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Card_compete from '../composants/Card_compete';
+import Card_photo from '../composants/Card_photo';
 import 'flowbite'; // Import Flowbite CSS
 import datepicker from 'flowbite/dist/datepicker';
 
@@ -75,14 +75,14 @@ const Photos = () => {
                             </div>
                         </form>
                         <div className='flex flex-wrap justify-stretch grid grid-cols-2 gap-3 '>
-                            <Card_compete/>  
-                            <Card_compete/>
-                            <Card_compete/>
-                            <Card_compete/>
-                            <Card_compete/>
-                            <Card_compete/>
-                            <Card_compete/>
-                            <Card_compete/>
+                            <Card_photo/>  
+                            <Card_photo/>
+                            <Card_photo/>
+                            <Card_photo/>
+                            <Card_photo/>
+                            <Card_photo/>
+                            <Card_photo/>
+                            <Card_photo/>
                         </div>
                 </div>
             
