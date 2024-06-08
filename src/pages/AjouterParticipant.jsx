@@ -10,26 +10,26 @@ const AjouterParticipant = () => {
                             Ajouter un  participant à EQUIPOLE 
                             LANDIVISIAU ECUR
                         </h1>
-                        <form className='grid grid-rows-6 grid-flow-col gap-4 pt-8 '>
+                        <form action="#" method="POST" className='grid grid-rows-6 grid-flow-col gap-4 pt-8 '>
                             <div  className='grid grid-rows-2 grid-flow-col'>
                                 <label>Club</label>
-                                <input className='bg-white border border-gray-300 rounded-lg' type='input' />
+                                <input required id="nom" name="nom" className='bg-white border border-gray-300 rounded-lg' type='input' />
                             </div>
                             <div  className='grid grid-rows-2 grid-flow-col'>
                                 <label>Cavalier</label>
-                                <input className='bg-white border border-gray-300 rounded-lg' type='input' />
+                                <input required id="cavalier" name="cavalier" className='bg-white border border-gray-300 rounded-lg' type='input' />
                             </div>
                             <div  className='grid grid-rows-2 grid-flow-col'>
                                 <label>Coach</label>
-                                <input className='bg-white border border-gray-300 rounded-lg' type='input' />
+                                <input required id="coach" name="coach" className='bg-white border border-gray-300 rounded-lg' type='input' />
                             </div>
                             <div  className='grid grid-rows-2 grid-flow-col'>
                                 <label>Cheval</label>
-                                <input className='bg-white border border-gray-300 rounded-lg ' type='input' />
+                                <input required id="cheval" name="cheval" className='bg-white border border-gray-300 rounded-lg ' type='input' />
                             </div>
                             <div  className='grid grid-rows-2 grid-flow-col'>
                                 <label>Race</label>
-                                <input className='bg-white border border-gray-300 rounded-lg ' type='input' />
+                                <input required id="race" name="race" className='bg-white border border-gray-300 rounded-lg ' type='input' />
                             </div>
                             <div className="w-full grid grid-cols-2 gap-4">
                                 <input

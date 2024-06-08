@@ -9,6 +9,7 @@ import NouvelleEpreuve from './pages/NouvelleEpreuve';
 import Photos from './pages/Photos';
 import AjouterParticipant from './pages/AjouterParticipant';
 import AjouterCompetition from './pages/AjouterCompetition';
+import DetailEpreuve from './pages/DetailEpreuve';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/AjouterCompetition" element={<AjouterCompetition/>} />
           <Route path="/Photos" element={<Photos/>} />
           <Route path="/DetailCompetition" element={<DetailCompetition/>} />
+          <Route path="/DetailEpreuve" element={<DetailEpreuve/>} />
           <Route path="*" element={<Accueil/>} />
         </Routes>
       </BrowserRouter>
