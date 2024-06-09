@@ -52,8 +52,8 @@ class Coach(Base):
     __tablename__ = 'coach'
 
     id = Column(String, primary_key=True, index=True)
-    nom = Column(String, nullable=False)
-    prenoms = Column(String, nullable=False)
+    nom_complet = Column(String, nullable=False)
+    #prenoms = Column(String, nullable=False)
     participants = relationship("Participant", backref="participantCoach", lazy="dynamic")
 
 class Epreuve(Base):

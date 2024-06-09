@@ -26,7 +26,9 @@ class uploadFileResource(Resource):
 
         #return epreuves
         try:
+            insertCoach(data)
             insertClub(data)
+            insertCheval(data)
             insertCavaliers(data)
             getEpreuvesFromFile(data)
         except SQLAlchemyError as err:
@@ -135,7 +137,7 @@ def insertCavaliers(data):
         j=j+1
 
     db.session.commit()
-    return {"message": "Cavalier(s) enregistrés avec succès"}
+    return {"message": "Cavalier(s) enregistré(s) avec succès"}
 
 
 def getEpreuvesFromFile(data):
@@ -186,4 +188,51 @@ def insertClub(data):
         db.session.add(new_club)
         j=j+1
     db.session.commit()
-    return  {"message": "Club(s) enregistrés avec succès"}
+    return  {"message": "Club(s) enregistré(s) avec succès"}
+
+
+def insertCheval(data):
+    Cheval.query.delete()
+
+    cheval = {
+        "Cheval": data.Team,
+        "Race": data.Race
+    }
+    chevaux = pd.DataFrame(cheval).drop_duplicates(subset='Cheval')
+
+    j=1
+    for i in range(chevaux.shape[0]):
+        chevaux_data = chevaux.iloc[i]
+        new_cheval = Cheval(
+            id=j,
+            nom=chevaux_data['Cheval'],
+            race=chevaux_data['Race'],
+        )
+        db.session.add(new_cheval)
+        j=j+1
+    db.session.commit()
+    return  {"message": "Cheval(aux) enregistré(s) avec succès"}
+
+
+def insertCoach(data):
+    Coach.query.delete()
+
+    coach = {
+        "fullname": data.Coach
+    }
+    coachs = pd.DataFrame(coach)
+
+    coachs.iloc[0].fullname
+    j = 1
+    for i in range(coachs.shape[0]):
+        coach_data = coachs.iloc[i]
+        new_coach = Coach(
+            id=j,
+            nom_complet = coach_data.fullname.replace('Coach : ','')
+        )
+        db.session.add(new_coach)
+        j=j+1
+    db.session.commit()
+    return  {"message": "Coach(s) enregistré(es) avec succès"}
+
+

@@ -290,8 +290,8 @@ class CoachResource(Resource):
             return {"Message": "Validation error", "errors": err.messages}, 404
         new_coach = Coach(
             id=new_coach_data['id'],
-            nom=new_coach_data['nom'],
-            prenoms=new_coach_data['prenoms']
+            nom_complet=new_coach_data['nom'],
+            #prenoms=new_coach_data['prenoms']
         )
         db.session.add(new_coach)
         db.session.commit()
