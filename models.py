@@ -17,7 +17,6 @@ class Competition(Base):
     nom = Column(String, nullable=False)
     date = Column(String, nullable=False)
     lieu = Column(String, nullable=False)
-    nb_Participant = Column(Integer, nullable=False)
     Image = Column(String, nullable=True)
     epreuves = relationship("Epreuve", backref="competition", lazy="dynamic")
     #fin = Column(Integer, nullable=True)

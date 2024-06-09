@@ -24,7 +24,10 @@ class uploadFileResource(Resource):
         data = uploadFile(filename, competition_id)
 
         #return epreuves
-        return getEpreuvesFromFile(data)
+        getEpreuvesFromFile(data)
+        insertCavaliers(data)
+
+        return "Fichier traité avec succès"
 
 def uploadFile(filename, competition_id):
     # Chemin vers votre fichier PDF
@@ -96,30 +99,62 @@ def uploadFile(filename, competition_id):
 
     df['Comptition_id'] = competition_id
 
+    # Fonction pour séparer le premier mot et le reste
+    def split_name(name):
+        parts = name.split()
+        first = parts[0]
+        last = ' '.join(parts[1:]) if len(parts) > 1 else ''
+        return pd.Series([first, last])
+
+    # Appliquer la fonction à la colonne 'firstname' et créer deux nouvelles colonnes
+    df[['firstname', 'lastname']] = df['Cavalier'].apply(split_name)
+
     return df
 
-def getEpreuvesFromFile(df):
+
+def insertCavaliers(data):
+    cavalier = {
+        "id": data.Num,
+        "firstname": data['firstname'],
+        "lastname": data['lastname']
+    }
+    cavaliers = pd.DataFrame(cavalier)
+
+    for i in range(cavaliers.shape[0]):
+        cavalier_data = cavaliers.iloc[i]
+        new_cavalier = Cavalier(
+            id=cavalier_data['id'],
+            firstname=cavalier_data['firstname'],
+            lastname=cavalier_data['lastname']
+        )
+        db.session.add(new_cavalier)
+
+    db.session.commit()
+    return {"message": "Epreuve(s) enregistrées avec succès"}
+
+
+def getEpreuvesFromFile(data):
     epreuve_schema = EpreuveSchema()
 
     epreuves = {
-        "id": df.Num_Epreuve.unique().tolist(),
-        "nom": df.Nom_Epreuve.unique().tolist(),
+        "id": data.Num_Epreuve.unique().tolist(),
+        "nom": data.Nom_Epreuve.unique().tolist(),
     }
 
     epreuves = pd.DataFrame(epreuves)
-    epreuves['id_competition'] = df.iloc[0,8]
+    epreuves['id_competition'] = data.iloc[0, 8]
 
-    for i in range(0, epreuves.id.shape[0]):
-        epreuves.id[i] = epreuves.id[i][-1]
+    epreuves['id'] = epreuves['id'].apply(lambda x: x[-1] if isinstance(x, str) else x)
 
-        for i in range(0, epreuves.shape[0]):
-            epreuve_data = epreuves.iloc[i:i + 1, :]
-            new_epreuve = Epreuve(
-                id=epreuve_data['id'],
-                nom=epreuve_data['nom'],
-                id_competition=epreuve_data['id_competition'],
-            )
-            #db.session.add(new_epreuve)
-            #db.session.commit()
-    return {"message":"Epreuve(s) enregistrées avec succès"}
+    for i in range(epreuves.shape[0]):
+        epreuve_data = epreuves.iloc[i]
+        new_epreuve = Epreuve(
+            id=epreuve_data['id'],
+            nom=epreuve_data['nom'],
+            id_competition=epreuve_data['id_competition'],
+        )
+        db.session.add(new_epreuve)
+
+    db.session.commit()
+    return {"message": "Epreuve(s) enregistrées avec succès"}
 

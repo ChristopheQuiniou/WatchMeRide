@@ -93,7 +93,6 @@ class CompetitionResource(Resource):
             nom=new_competition_data['nom'],
             date=new_competition_data['date'],
             lieu=new_competition_data['lieu'],
-            nb_Participant=new_competition_data['nb_Participant'],
             Image=new_competition_data['Image']
         )
         db.session.add(new_competition)
