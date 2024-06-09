@@ -6,6 +6,7 @@ import json
 from flask import request
 from flask_restful import Resource
 from marshmallow import ValidationError
+from sqlalchemy.exc import SQLAlchemyError
 
 from models import Cavalier, Competition, db, Club, Cheval, Coach, Epreuve, Photo, Participant
 from schemas import CavalierSchema, CompetitionSchema, ClubSchema, ChevalSchema, CoachSchema, EpreuveSchema, PhotoSchema, ParticipantSchema
@@ -24,8 +25,12 @@ class uploadFileResource(Resource):
         data = uploadFile(filename, competition_id)
 
         #return epreuves
-        getEpreuvesFromFile(data)
-        insertCavaliers(data)
+        try:
+            insertClub(data)
+            insertCavaliers(data)
+            getEpreuvesFromFile(data)
+        except SQLAlchemyError as err:
+            return {"Message": "Erreur de traitement du fichier", "errors": err._message()}, 404
 
         return "Fichier traité avec succès"
 
@@ -113,32 +118,36 @@ def uploadFile(filename, competition_id):
 
 
 def insertCavaliers(data):
+    Cavalier.query.delete()
     cavalier = {
         "id": data.Num,
-        "firstname": data['firstname'],
-        "lastname": data['lastname']
+        "fullname": data['Cavalier'],
     }
     cavaliers = pd.DataFrame(cavalier)
-
+    j = 1
     for i in range(cavaliers.shape[0]):
         cavalier_data = cavaliers.iloc[i]
         new_cavalier = Cavalier(
-            id=cavalier_data['id'],
-            firstname=cavalier_data['firstname'],
-            lastname=cavalier_data['lastname']
+            id=j,
+            fullname=cavalier_data['fullname'],
         )
         db.session.add(new_cavalier)
+        j=j+1
 
     db.session.commit()
-    return {"message": "Epreuve(s) enregistrées avec succès"}
+    return {"message": "Cavalier(s) enregistrés avec succès"}
 
 
 def getEpreuvesFromFile(data):
-    epreuve_schema = EpreuveSchema()
+    Epreuve.query.delete()
+
+    competition = Competition.query.get_or_404(data.iloc[0, 8])
 
     epreuves = {
         "id": data.Num_Epreuve.unique().tolist(),
         "nom": data.Nom_Epreuve.unique().tolist(),
+        "id_competition": data.iloc[0, 8],
+        "lieu": competition.lieu,
     }
 
     epreuves = pd.DataFrame(epreuves)
@@ -152,9 +161,29 @@ def getEpreuvesFromFile(data):
             id=epreuve_data['id'],
             nom=epreuve_data['nom'],
             id_competition=epreuve_data['id_competition'],
+            lieu = epreuve_data['lieu'],
         )
         db.session.add(new_epreuve)
 
     db.session.commit()
     return {"message": "Epreuve(s) enregistrées avec succès"}
 
+
+def insertClub(data):
+    Club.query.delete()
+    club = {
+        "name": data.Club.unique().tolist(),
+    }
+    clubs = pd.DataFrame(club)
+
+    j=1
+    for i in range(clubs.shape[0]):
+        club_data = clubs.iloc[i]
+        new_club = Club(
+            id=j,
+            name=club_data['name'],
+        )
+        db.session.add(new_club)
+        j=j+1
+    db.session.commit()
+    return  {"message": "Club(s) enregistrés avec succès"}

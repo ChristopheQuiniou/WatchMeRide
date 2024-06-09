@@ -3,6 +3,8 @@ from tkinter import Image
 from flask import request
 from flask_restful import Resource
 from marshmallow import ValidationError
+from sqlalchemy import select
+from sqlalchemy.orm import session
 
 from models import Cavalier, Competition, db, Club, Cheval, Coach, Epreuve, Photo, Participant
 from schemas import CavalierSchema, CompetitionSchema, ClubSchema, ChevalSchema, CoachSchema, EpreuveSchema, PhotoSchema, ParticipantSchema
@@ -29,8 +31,8 @@ class CavalierResource(Resource):
             return {"Message": "Validation error", "errors": err.messages}, 404
         new_cavalier = Cavalier(
             id = new_cavalier_data['id'],
-            firstname = new_cavalier_data['firstname'],
-            lastname = new_cavalier_data['lastname'],
+            fullname = new_cavalier_data['fullname'],
+            #lastname = new_cavalier_data['lastname'],
             #Club = new_cavalier_data['Club']
         )
         db.session.add(new_cavalier)
@@ -131,6 +133,26 @@ class CompetitionResource(Resource):
         db.session.commit()
         return '', 204
 
+class CompetByEpreuveResource(Resource):
+    competition_schema = CompetitionSchema()
+    Epreuve_schema = EpreuveSchema(many=True)
+
+    def get(self, competition_id):
+        epreuve = Epreuve.query.filter_by(id_competition=competition_id)
+        return self.Epreuve_schema.dump(epreuve)
+
+
+class ParticipantsByEpreuveResource(Resource):
+    participant_schema = ParticipantSchema(many=True)
+    Epreuve_schema = EpreuveSchema()
+
+    def get(self, epreuve_id):
+        participant = Participant.query.filter_by(id_epreuve=epreuve_id)
+        return self.participant_schema.dump(participant)
+
+
+
+
 class ClubResource(Resource):
     club_schema = ClubSchema()
     club_list_schema = ClubSchema(many=True)
@@ -157,11 +179,35 @@ class ClubResource(Resource):
         db.session.commit()
         return self.club_schema.dump(new_club)
 
+    def put(self, club_id):
+        try:
+            new_club_data = self.club_schema.load(request.json)
+        except ValidationError as err:
+            return {"Message": "Validation error", "errors": err.messages}, 404
+        club = Club.query.get_or_404(club_id)
+        for key, value in new_club_data.items():
+            if value is not None:
+                setattr(club, key, value)
+        db.session.commit()
+        return self.club_schema.dump(club)
+
+    def patch(self, club_id):
+        try:
+            new_club_data = self.club_schema.load(request.json)
+        except ValidationError as err:
+            return {"Message": "Validation error", "errors": err.messages}, 404
+        club = Club.query.get_or_404(club_id)
+        for key, value in new_club_data.items():
+            if value is not None:
+                setattr(club, key, value)
+        db.session.commit()
+        return self.club_schema.dump(club)
+
     def delete(self, club_id):
         club = Club.query.get_or_404(club_id)
         db.session.delete(club)
         db.session.commit()
-        return '', 204
+        {"Message": "Supprimé avec succès"}, 204
 
 class ChevalResource(Resource):
 
@@ -222,7 +268,7 @@ class ChevalResource(Resource):
         cheval = Cheval.query.get_or_404(Cheval_id)
         db.session.delete(cheval)
         db.session.commit()
-        return '', 204
+        {"Message": "Supprimé avec succès"}, 204
 
 class CoachResource(Resource):
     coach_schema  = CoachSchema()
@@ -279,7 +325,7 @@ class CoachResource(Resource):
         coach = Coach.query.get_or_404(coach_id)
         db.session.delete(coach)
         db.session.commit()
-        return '', 204
+        {"Message": "Supprimé avec succès"}, 204
 
 class EpreuveResource(Resource):
     epreuve_schema = EpreuveSchema()
@@ -303,6 +349,7 @@ class EpreuveResource(Resource):
             new_epreuve = Epreuve(
                 id=epreuve_data['id'],
                 nom=epreuve_data['nom'],
+                lieu=epreuve_data['lieu'],
                 id_competition=epreuve_data['id_competition'],
             )
             db.session.add(new_epreuve)
@@ -337,22 +384,7 @@ class EpreuveResource(Resource):
         epreuve = Epreuve.query.get_or_404(epreuve_id)
         db.session.delete(epreuve)
         db.session.commit()
-        return '', 204
-
-
-class PhotoResource(Resource):
-    photos_schema = PhotoSchema()
-    photos_list_schema = PhotoSchema(many=True)
-    photo_pacth_schema = PhotoSchema(partial=True)
-
-    def get(self, id_photo=None):
-        if id_photo:
-            photo = Image.query.get_or_404(id_photo)
-            return self.photos_schema.dump(photo)
-        else:
-            all_photo = Photo.query.all()
-            return self.photos_list_schema.dump(all_photo)
-
+        return  {"Message": "Supprimé avec succès"}, 204
 
 class PhotoResource(Resource):
     photos_schema = PhotoSchema()
@@ -376,10 +408,41 @@ class PhotoResource(Resource):
             id_photo = new_photo['id_photo'],
             id_cavalier = new_photo['id_cavalier'],
             url_photo = new_photo['url_photo'],
+            date_photo = new_photo['date_photo'],
+            heure_photo = new_photo['heure_photo'],
+            id_epreuve = new_photo['id_epreuve'],
         )
         db.session.add(new_photo)
         db.session.commit()
         return self.photos_schema.dump(new_photo)
+
+    def put(self, id_photo):
+        try:
+            new_photo = self.photos_schema.load(request.json)
+        except ValidationError as err:
+            return {"Message": "Validation error", "errors": err.messages}, 404
+        photo = Photo.query.get_or_404(id_photo)
+        for key, value in new_photo.items():
+            setattr(photo, key, value)
+        db.session.commit()
+        return self.photos_schema.dump(photo)
+
+    def patch(self, id_photo):
+        try:
+            new_photo = self.photos_schema.load(request.json)
+        except ValidationError as err:
+            return {"Message": "Validation error", "errors": err.messages}, 404
+        photo = Photo.query.get_or_404(id_photo)
+        for key, value in new_photo.items():
+            setattr(photo, key, value)
+        db.session.commit()
+        return self.photos_schema.dump(photo)
+
+    def delete(self, id_photo):
+        photo = Photo.query.get_or_404(id_photo)
+        db.session.delete(photo)
+        db.session.commit()
+        return {"Message": "Supprimé avec succès"}, 204
 
 
 class ParticipantResource(Resource):
@@ -400,7 +463,8 @@ class ParticipantResource(Resource):
             id_cavalier = new_participant_data['id_cavalier'],
             id_cheval = new_participant_data['id_cheval'],
             id_coach = new_participant_data['id_coach'],
-            id_club = new_participant_data['id_club']
+            id_club = new_participant_data['id_club'],
+            id_epreuve = new_participant_data['id_epreve'],
         )
         db.session.add(new_participant)
         db.session.commit()

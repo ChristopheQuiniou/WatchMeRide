@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="watchMeRide [2]" uuid="5ca7be0c-97b2-4de5-9026-68346f2f838c">
+    <data-source source="LOCAL" name="watchMeRide" uuid="f5d59bf3-e02d-4bad-ae81-af8358a23343">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\arnau\PycharmProjects\WatchMeRide\instance\watchMeRide.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:D:\WatchMeRide_BackEnd\WatchMeRide\instance\watchMeRide.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>

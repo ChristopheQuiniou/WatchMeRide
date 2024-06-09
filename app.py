@@ -5,7 +5,8 @@ from flask_migrate import Migrate
 
 from functions.uploadFile import uploadFileResource
 from models import db, Cavalier
-from resource import CavalierResource, CompetitionResource, ClubResource, ChevalResource, CoachResource, EpreuveResource, PhotoResource, ParticipantResource
+from resource import CavalierResource, CompetitionResource, ClubResource, ChevalResource, CoachResource, \
+    EpreuveResource, PhotoResource, ParticipantResource, CompetByEpreuveResource, ParticipantsByEpreuveResource
 from schemas import ma
 import requests
 
@@ -20,6 +21,8 @@ api = Api(app)
 
 api.add_resource(CavalierResource, '/cavaliers', '/cavaliers/<int:cavalier_id>')
 api.add_resource(CompetitionResource, '/competitions', '/competitions/<int:competition_id>')
+api.add_resource(CompetByEpreuveResource, '/EpreuvesByCompetition/<int:competition_id>')
+api.add_resource(ParticipantsByEpreuveResource, '/ParticipantsByEpreuve/<int:epreuve_id>')
 api.add_resource(ClubResource, '/clubs', '/clubs/<int:club_id>')
 api.add_resource(ChevalResource, '/chevaux', '/chevaux/<int:Cheval_id>')
 api.add_resource(CoachResource, '/coach', '/coach/<int:coach_id>')
