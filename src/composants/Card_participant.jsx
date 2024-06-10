@@ -45,7 +45,7 @@ const Card_participant = ({participant}) => {
                 
             </div>
             <div className="py-1.5 inline-flex px-6 bg-[#858386] uppercase w-auto text-white">
-            {participant.cheval.race}
+            {participant.coach.nom_complet}
             </div>
         </li>
     );
