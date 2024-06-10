@@ -1,14 +1,14 @@
 import React from 'react';
 
-const Card = ({ competition }) => {
+const Card = ({ competition, handleClick }) => {
     return (
         
 
-        <div class=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 border-solid border-1 border-gray-600">
-            <a href="/DetailCompetition">
+        <li class=" bg-white border  rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 border-solid border-1 border-gray-600" onClick={() => handleClick(competition.id)}>
+            <a href="">
                 <img 
                 class="rounded-t-lg filter grayscale hover:grayscale-0" 
-                src="https://www.roscoff-tourisme.com/uploads/2019/05/equipole-pays-landivisiau-1.jpg" 
+                src={competition.Image}
                 alt={competition.nom} />
             </a>
             <div class="p-5">
@@ -22,7 +22,7 @@ const Card = ({ competition }) => {
                     </h5>
                 </a>
             </div>
-        </div>
+        </li>
 
     );
 };

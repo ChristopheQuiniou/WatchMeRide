@@ -74,7 +74,7 @@ const Photos = () => {
                                 <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Chercher</button>
                             </div>
                         </form>
-                        <div className='flex flex-wrap justify-stretch grid grid-cols-2 gap-3 '>
+                        <ul className='grid grid-cols-2 gap-3 '>
                             <Card_photo/>  
                             <Card_photo/>
                             <Card_photo/>
@@ -83,7 +83,7 @@ const Photos = () => {
                             <Card_photo/>
                             <Card_photo/>
                             <Card_photo/>
-                        </div>
+                        </ul>
                 </div>
             
 

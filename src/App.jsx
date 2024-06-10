@@ -7,7 +7,7 @@ import Competitions from './pages/Competitions';
 import DetailCompetition from './pages/DetailCompetition';
 import AjouterEpreuve from './pages/AjouterEpreuve';
 import Photos from './pages/Photos';
-import AjouterParticipant from './pages/AjouterEpreuve';
+import AjouterParticipant from './pages/AjouterParticipant';
 import AjouterCompetition from './pages/AjouterCompetition';
 import DetailEpreuve from './pages/DetailEpreuve';
 
@@ -24,8 +24,8 @@ function App() {
           <Route path="/AjouterParticipant" element={<AjouterParticipant/>} />
           <Route path="/AjouterCompetition" element={<AjouterCompetition/>} />
           <Route path="/Photos" element={<Photos/>} />
-          <Route path="/DetailCompetition" element={<DetailCompetition/>} />
-          <Route path="/DetailEpreuve" element={<DetailEpreuve/>} />
+          <Route path="/DetailCompetition/:id" element={<DetailCompetition/>} />
+          <Route path="/DetailEpreuve/:id" element={<DetailEpreuve/>} />
           <Route path="*" element={<Accueil/>} />
         </Routes>
       </BrowserRouter>

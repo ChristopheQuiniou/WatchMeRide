@@ -4,7 +4,7 @@ const Card_photo = () => {
     return (
         
 
-        <div class=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 border-solid border-1 border-gray-600">
+        <li class=" bg-white border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 border-solid border-1 border-gray-600">
             <a href="/DetailCompetition">
                 <img 
                 class="rounded-t-lg filter grayscale hover:grayscale-0" 
@@ -22,7 +22,7 @@ const Card_photo = () => {
                     </h5>
                 </a>
             </div>
-        </div>
+        </li>
 
     );
 };

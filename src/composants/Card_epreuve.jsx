@@ -1,25 +1,25 @@
 import React from 'react';
 
-const Card_epreuve = () => {
+const Card_epreuve = ({ ep, handleClick }) => {
     return (
         
 
-        <div class=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 border-solid border-1 border-gray-600">
+        <li className="bg-white border rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 border-solid border-1 border-gray-600" onClick={() => handleClick(ep.id)}>
             
-            <a href="/DetailEpreuve">
-                <div class="p-5">
+            <a href="">
+                <div className="p-5">
                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                        Lieu
+                        {ep.lieu}
                     </p>
 
                 
-                        <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                            Nom
-                        </h5>
+                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {ep.nom}
+                    </h5>
                     
                 </div>
             </a>
-        </div>
+        </li>
 
     );
 };

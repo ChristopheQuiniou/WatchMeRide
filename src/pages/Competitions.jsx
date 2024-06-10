@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Card_compete from '../composants/Card_compete';
 
@@ -8,7 +9,7 @@ const Competitions = () => {
         useEffect(() => {
             const fetchData = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:5000/competitions');
+                const response = await axios.get('http://89.81.6.81:5000//competitions');
                 setCompetitions(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -18,11 +19,18 @@ const Competitions = () => {
             fetchData();
         }, []);
 
+        const navigate = useNavigate();
+
+        const handleClick = (id) => {
+            navigate(`/DetailCompetition/${id}`);
+            console.log(`${id}`);
+        };
+
     return (
         <div className='p-8'>
 
 
-            <div className='flex pb-8 justify-between grid grid-cols-2 gap-1'>
+            <div className='grid grid-cols-2 gap-1'>
                     <form className="w-full py-auto">   
                         <label for="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Chercher</label>
                         <div className="relative">
@@ -44,11 +52,11 @@ const Competitions = () => {
 
             
 
-            <div className='flex flex-wrap justify-stretch grid grid-cols-3 gap-3  '>
+            <ul className='grid grid-cols-3 gap-3 mt-5  '>
                 {competitions.map((competition) => (
-                    <Card_compete key={competition.id} competition={competition} />
+                    <Card_compete key={competition.id} competition={competition} handleClick={handleClick} />
                 ))}
-            </div>
+            </ul>
 
         </div>
     );
