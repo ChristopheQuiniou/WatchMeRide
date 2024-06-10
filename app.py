@@ -13,6 +13,7 @@ import requests
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///watchMeRide.db'
+app.config['UPLOAD_FOLDER'] = 'stoarge'
 
 db.init_app(app)
 ma.init_app(app)
@@ -33,7 +34,6 @@ api.add_resource(ParticipantResource, '/participants')
 api.add_resource(uploadFileResource, '/uploadFile')
 
 migrate = Migrate(app, db)
-
 
 
 with app.app_context():

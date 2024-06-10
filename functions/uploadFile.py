@@ -1,42 +1,55 @@
 import pandas as pd
 import re
 import fitz
-import json
+import os
 
 from flask import request
 from flask_restful import Resource
 from marshmallow import ValidationError
 from sqlalchemy.exc import SQLAlchemyError
 
+
 from models import Cavalier, Competition, db, Club, Cheval, Coach, Epreuve, Photo, Participant
 from schemas import CavalierSchema, CompetitionSchema, ClubSchema, ChevalSchema, CoachSchema, EpreuveSchema, PhotoSchema, ParticipantSchema
+
 
 class uploadFileResource(Resource):
 
     def post(self):
-        try:
-            new_epreuve_data = request.json
-        except ValidationError as err:
-            return {"Message": "Validation error", "errors": err.messages}, 404
+        if 'file' not in request.files:
+            return {"Message": "Aucun fichier reçu"}, 400
 
-        filename = new_epreuve_data['filename']
-        competition_id = new_epreuve_data['competition_id']
+        if 'competition_id' not in request.form:
+            return {"Message": "Le numéro de compétition (competitiopn_id) est manquant"}, 400
 
-        data = uploadFile(filename, competition_id)
+        file = request.files['file']
+        if file.filename == '':
+            return 'No selected file', 400
+
+        if file:
+            filename = file.filename
+            file.save(os.path.join('storage', filename))
+            #return 'File uploaded successfully', 200
+
+        filename = file.filename
+        competition_id = request.form['competition_id']
+
+        data = uploadFile(os.path.join('storage', filename) , competition_id)
 
         #return epreuves
         try:
             insertCoach(data)
             insertClub(data)
             insertCheval(data)
+            insertEpreuve(data)
             insertCavaliers(data)
-            getEpreuvesFromFile(data)
         except SQLAlchemyError as err:
             return {"Message": "Erreur de traitement du fichier", "errors": err._message()}, 404
 
         return "Fichier traité avec succès"
 
 def uploadFile(filename, competition_id):
+
     # Chemin vers votre fichier PDF
     pdf_path = filename
 
@@ -119,13 +132,16 @@ def uploadFile(filename, competition_id):
     return df
 
 
+
 def insertCavaliers(data):
     Cavalier.query.delete()
+    Participant.query.delete()
+
     cavalier = {
         "id": data.Num,
         "fullname": data['Cavalier'],
     }
-    cavaliers = pd.DataFrame(cavalier)
+    cavaliers = pd.DataFrame({"fullname":pd.DataFrame(cavalier).fullname.unique()})
     j = 1
     for i in range(cavaliers.shape[0]):
         cavalier_data = cavaliers.iloc[i]
@@ -134,13 +150,39 @@ def insertCavaliers(data):
             fullname=cavalier_data['fullname'],
         )
         db.session.add(new_cavalier)
+
+        prt = data.loc[data['Cavalier'] == cavalier_data['fullname']]
+
+
+        # récupération cheval
+        cheval = Cheval.query.filter_by(nom=prt.Team.iloc[0]).first()
+
+        # récupération coach
+        coach = Coach.query.filter_by(nom_complet=prt.Coach.iloc[0].replace('Coach : ','')).first()
+
+        # récupération du Club
+        club = Club.query.filter_by(name=prt.Club.iloc[0]).first()
+
+        #Epreuve
+        num_epreuve = prt.Num_Epreuve.apply(lambda x: x[-1] if isinstance(x, str) else x).iloc[0]
+        print(f"Participants : {num_epreuve}")
+
+        n_participant = Participant(
+            id_cavalier=j,
+            id_club=club.id,
+            id_cheval=cheval.id,
+            id_coach=coach.id,
+            id_epreuve=num_epreuve,
+        )
+        db.session.add(n_participant)
+
         j=j+1
 
     db.session.commit()
+
     return {"message": "Cavalier(s) enregistré(s) avec succès"}
 
-
-def getEpreuvesFromFile(data):
+def insertEpreuve(data):
     Epreuve.query.delete()
 
     competition = Competition.query.get_or_404(data.iloc[0, 8])
@@ -218,7 +260,7 @@ def insertCoach(data):
     Coach.query.delete()
 
     coach = {
-        "fullname": data.Coach
+        "fullname": data.Coach.unique()
     }
     coachs = pd.DataFrame(coach)
 
@@ -228,11 +270,11 @@ def insertCoach(data):
         coach_data = coachs.iloc[i]
         new_coach = Coach(
             id=j,
-            nom_complet = coach_data.fullname.replace('Coach : ','')
+            nom_complet = coach_data.fullname.replace('Coach : ', '')
         )
         db.session.add(new_coach)
         j=j+1
     db.session.commit()
-    return  {"message": "Coach(s) enregistré(es) avec succès"}
+    return {"message": "Coach(s) enregistré(es) avec succès"}
 
 

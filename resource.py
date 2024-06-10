@@ -71,6 +71,7 @@ class CavalierResource(Resource):
         db.session.commit()
         return '', 204
 
+
 class CompetitionResource(Resource):
 
     competition_schema = CompetitionSchema()
@@ -133,6 +134,7 @@ class CompetitionResource(Resource):
         db.session.commit()
         return '', 204
 
+
 class CompetByEpreuveResource(Resource):
     competition_schema = CompetitionSchema()
     Epreuve_schema = EpreuveSchema(many=True)
@@ -149,8 +151,6 @@ class ParticipantsByEpreuveResource(Resource):
     def get(self, epreuve_id):
         participant = Participant.query.filter_by(id_epreuve=epreuve_id)
         return self.participant_schema.dump(participant)
-
-
 
 
 class ClubResource(Resource):
@@ -208,6 +208,7 @@ class ClubResource(Resource):
         db.session.delete(club)
         db.session.commit()
         {"Message": "Supprimé avec succès"}, 204
+
 
 class ChevalResource(Resource):
 
@@ -270,6 +271,7 @@ class ChevalResource(Resource):
         db.session.commit()
         {"Message": "Supprimé avec succès"}, 204
 
+
 class CoachResource(Resource):
     coach_schema  = CoachSchema()
     coach_list_schema = CoachSchema(many=True)
@@ -326,6 +328,7 @@ class CoachResource(Resource):
         db.session.delete(coach)
         db.session.commit()
         {"Message": "Supprimé avec succès"}, 204
+
 
 class EpreuveResource(Resource):
     epreuve_schema = EpreuveSchema()
@@ -385,6 +388,7 @@ class EpreuveResource(Resource):
         db.session.delete(epreuve)
         db.session.commit()
         return  {"Message": "Supprimé avec succès"}, 204
+
 
 class PhotoResource(Resource):
     photos_schema = PhotoSchema()
@@ -452,7 +456,7 @@ class ParticipantResource(Resource):
 
     def get(self):
         participants = Participant.query.all()
-        return self.participant_schema.dump(participants)
+        return self.participant_list_schema.dump(participants)
 
     def post(self):
         try:
