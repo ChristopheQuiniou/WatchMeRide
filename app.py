@@ -20,6 +20,10 @@ ma.init_app(app)
 
 api = Api(app)
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 api.add_resource(CavalierResource, '/cavaliers', '/cavaliers/<int:cavalier_id>')
 api.add_resource(CompetitionResource, '/competitions', '/competitions/<int:competition_id>')
 api.add_resource(CompetByEpreuveResource, '/EpreuvesByCompetition/<int:competition_id>')
@@ -40,4 +44,4 @@ with app.app_context():
     db.create_all()
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)

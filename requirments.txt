@@ -7,3 +7,4 @@ marshmallow-sqlalchemy
 flask-mysql
 PyMuPDF
 pandas
+requests

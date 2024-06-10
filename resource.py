@@ -219,7 +219,7 @@ class ChevalResource(Resource):
     def get(self, Cheval_id=None):
         if Cheval_id:
             cheval = Cheval.query.get_or_404(Cheval_id)
-            return self.Cheval_schema_schema.dump(cheval)
+            return self.Cheval_schema.dump(cheval)
         else:
             all_Cheval = Cheval.query.all()
             return self.Cheval_list_schema.dump(all_Cheval)
