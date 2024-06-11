@@ -8,3 +8,4 @@ flask-mysql
 PyMuPDF
 pandas
 requests
+flask-cors
