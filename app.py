@@ -6,7 +6,7 @@ from flask_cors import CORS, cross_origin
 from functions.uploadFile import uploadFileResource
 from models import db, Cavalier
 from resource import CavalierResource, CompetitionResource, ClubResource, ChevalResource, CoachResource, \
-    EpreuveResource, PhotoResource, ParticipantResource, CompetByEpreuveResource, ParticipantsByEpreuveResource
+    EpreuveResource, PhotoResource, PhotoResourceFilter, ParticipantResource, CompetByEpreuveResource, ParticipantsByEpreuveResource
 from schemas import ma
 import requests
 
@@ -34,6 +34,7 @@ api.add_resource(ChevalResource, '/chevaux', '/chevaux/<int:Cheval_id>')
 api.add_resource(CoachResource, '/coach', '/coach/<int:coach_id>')
 api.add_resource(EpreuveResource, '/epreuves', '/epreuves/<int:epreuve_id>')
 api.add_resource(PhotoResource, '/photos', '/photos/<int:photo_id>')
+api.add_resource(PhotoResourceFilter, '/photosFilter', '/photosFilter/<string:photo_filter>')
 api.add_resource(ParticipantResource, '/participants')
 
 api.add_resource(uploadFileResource, '/uploadFile')

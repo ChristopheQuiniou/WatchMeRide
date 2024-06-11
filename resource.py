@@ -1,3 +1,4 @@
+from datetime import datetime
 from tkinter import Image
 
 from flask import request
@@ -5,7 +6,7 @@ from flask_restful import Resource
 from marshmallow import ValidationError
 from sqlalchemy import select
 from sqlalchemy.orm import session
-
+import json
 from models import Cavalier, Competition, db, Club, Cheval, Coach, Epreuve, Photo, Participant
 from schemas import CavalierSchema, CompetitionSchema, ClubSchema, ChevalSchema, CoachSchema, EpreuveSchema, PhotoSchema, ParticipantSchema
 
@@ -348,16 +349,16 @@ class EpreuveResource(Resource):
             new_epreuve_data = self.epreuve_schema.load(request.json)
         except ValidationError as err:
             return {"Message": "Validation error", "errors": err.messages}, 404
-        for epreuve_data in new_epreuve_data:
-            new_epreuve = Epreuve(
-                id=epreuve_data['id'],
-                nom=epreuve_data['nom'],
-                lieu=epreuve_data['lieu'],
-                id_competition=epreuve_data['id_competition'],
-            )
-            db.session.add(new_epreuve)
-            db.session.commit()
-        return self.epreuve_schema.dump("Epreuve(s) Enregistrée(s) avec succès")
+
+        new_epreuve = Epreuve(
+            id=new_epreuve_data['id'],
+            nom=new_epreuve_data['nom'],
+            lieu=new_epreuve_data['lieu'],
+            id_competition=new_epreuve_data['id_competition'],
+        )
+        db.session.add(new_epreuve)
+        db.session.commit()
+        return self.epreuve_schema.dump(new_epreuve)
 
     def put(self, epreuve_id):
         try:
@@ -397,7 +398,7 @@ class PhotoResource(Resource):
 
     def get(self, id_photo=None):
         if id_photo:
-            photo = Image.query.get_or_404(id_photo)
+            photo = Photo.query.get_or_404(id_photo)
             return self.photos_schema.dump(photo)
         else:
             all_photo = Photo.query.all()
@@ -412,8 +413,8 @@ class PhotoResource(Resource):
             id_photo = new_photo['id_photo'],
             id_cavalier = new_photo['id_cavalier'],
             url_photo = new_photo['url_photo'],
-            date_photo = new_photo['date_photo'],
-            heure_photo = new_photo['heure_photo'],
+            date_photo = datetime.strptime(new_photo['date_photo'],"%d/%m/%Y"),
+            heure_photo = datetime.strptime(new_photo['heure_photo'],"%H:%M"),
             id_epreuve = new_photo['id_epreuve'],
         )
         db.session.add(new_photo)
@@ -442,6 +443,35 @@ class PhotoResource(Resource):
         db.session.commit()
         return self.photos_schema.dump(photo)
 
+    def delete(self, id_photo):
+        photo = Photo.query.get_or_404(id_photo)
+        db.session.delete(photo)
+        db.session.commit()
+        return {"Message": "Supprimé avec succès"}, 204
+class PhotoResourceFilter(Resource):
+    photos_schema = PhotoSchema()
+    photos_list_schema = PhotoSchema(many=True)
+    photo_pacth_schema = PhotoSchema(partial=True)
+
+    def get(self, photo_filer=None):
+
+        filters = request.json
+        if "id" in filters:
+            photo = Photo.query.get_or_404(filters['id'])
+            return self.photos_schema.dump(photo)
+        elif "date" in filters:
+                photo = Photo.query.filter(Photo.date_photo == filters['date']).all()
+                return self.photos_list_schema.dump(photo)
+        elif "heure" in filters:
+                photo = Photo.query.filter(Photo.heure_photo == filters['date']).all()
+                return self.photos_list_schema.dump(photo)
+        elif "cavalier" in filters:
+                cavalier = Cavalier.query.filter(Cavalier.fullname == filters['cavalier']).first()
+                photo = Photo.query.filter(Photo.id_cavalier == cavalier.id)
+                return self.photos_list_schema.dump(photo)
+        else:
+            all_photo = Photo.query.all()
+            return self.photos_list_schema.dump(all_photo)
     def delete(self, id_photo):
         photo = Photo.query.get_or_404(id_photo)
         db.session.delete(photo)
