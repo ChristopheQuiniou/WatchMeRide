@@ -2,6 +2,7 @@ from flask import Flask, render_template
 #from flask.ext.mysql import MySQL
 from flask_restful import Api
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 from functions.uploadFile import uploadFileResource
 from models import db, Cavalier
@@ -14,6 +15,7 @@ import requests
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///watchMeRide.db'
 app.config['UPLOAD_FOLDER'] = 'stoarge'
+CORS(app)
 
 db.init_app(app)
 ma.init_app(app)
