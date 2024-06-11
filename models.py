@@ -69,8 +69,8 @@ class Photo(Base):
     id_photo = Column(Integer, primary_key=True, index=True, autoincrement=True)
     id_cavalier = Column(Integer, index=True)
     url_photo = Column(String, nullable=False)
-    date_photo = Column(Date, nullable=False)
-    heure_photo = Column(Time, nullable=False)
+    date_photo = Column(String, nullable=False)
+    heure_photo = Column(String, nullable=False)
     id_epreuve = Column(Integer, nullable=False)
 
 class Participant(Base):
