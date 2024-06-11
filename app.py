@@ -2,8 +2,7 @@ from flask import Flask, render_template
 #from flask.ext.mysql import MySQL
 from flask_restful import Api
 from flask_migrate import Migrate
-from flask_cors import CORS
-
+from flask_cors import CORS, cross_origin
 from functions.uploadFile import uploadFileResource
 from models import db, Cavalier
 from resource import CavalierResource, CompetitionResource, ClubResource, ChevalResource, CoachResource, \
