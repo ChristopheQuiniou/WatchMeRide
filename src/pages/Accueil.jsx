@@ -9,9 +9,9 @@ const Accueil = () => {
     
     return (
         <div className=''>
-            <div className='w-full h-[700px] relative'>
-                <img className='w-full h-[700px] object-cover blur-sm ' src={Home} alt="Cover" />
-                <div className='absolute p-40 top-0 left-0 w-full h-full bg-gradient-to-b from-[#000F05]  to-[#000F05] opacity-90 flex justify-end items-center grid grid-cols-2'>
+            <div className='w-full h-[600px] relative'>
+                <img className='w-full h-[600px] object-cover blur-sm ' src={Home} alt="Cover" />
+                <div className='absolute p-40 top-0 left-0 w-full h-full bg-gradient-to-b from-[#000F05]  to-[#000F05] opacity-90 grid grid-cols-2'>
                     <div className=' justify-end items-center'>
                         <h1 className=' text-white text-7xl font-bold place-items-center'>Watch me ride</h1>
                         <p className='text-white text-xl leading-9'>

@@ -4,7 +4,7 @@ import Cav from '../assets/Cavalier.png';
 
 const AjouterEpreuve = () => {
     return (
-        <div className='flex justify-between gap-4'>
+        <div className='grid grid-cols-2 gap-4'>
             <div className='p-8 text-black'>
                         <h1 className='text-3xl font-bold pt-8'>
                             Ajouter une nouvelle épreuve à la compétition EQUIPOLE 

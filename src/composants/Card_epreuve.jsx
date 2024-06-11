@@ -13,12 +13,15 @@ const Card_epreuve = ({ ep, handleClick }) => {
                     </p>
 
                 
-                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    <h5 className=" text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {ep.nom}
                     </h5>
                     
                 </div>
             </a>
+            <div className="py-1.5 inline-flex px-6 bg-[#858386] uppercase w-auto text-white rounded-bl-lg ">
+                Épreuve n°{ep.id}
+            </div>
         </li>
 
     );
