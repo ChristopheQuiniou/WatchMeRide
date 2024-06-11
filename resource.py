@@ -413,38 +413,38 @@ class PhotoResource(Resource):
             id_photo = new_photo['id_photo'],
             id_cavalier = new_photo['id_cavalier'],
             url_photo = new_photo['url_photo'],
-            date_photo = datetime.strptime(new_photo['date_photo'],"%d/%m/%Y"),
-            heure_photo = datetime.strptime(new_photo['heure_photo'],"%H:%M"),
+            date_photo = new_photo['date_photo'],
+            heure_photo = new_photo['heure_photo'],
             id_epreuve = new_photo['id_epreuve'],
         )
         db.session.add(new_photo)
         db.session.commit()
         return self.photos_schema.dump(new_photo)
 
-    def put(self, id_photo):
+    def put(self, photo_id):
         try:
             new_photo = self.photos_schema.load(request.json)
         except ValidationError as err:
             return {"Message": "Validation error", "errors": err.messages}, 404
-        photo = Photo.query.get_or_404(id_photo)
+        photo = Photo.query.get_or_404(photo_id)
         for key, value in new_photo.items():
             setattr(photo, key, value)
         db.session.commit()
         return self.photos_schema.dump(photo)
 
-    def patch(self, id_photo):
+    def patch(self, photo_id):
         try:
-            new_photo = self.photos_schema.load(request.json)
+            new_photo = self.photo_pacth_schema.load(request.json)
         except ValidationError as err:
             return {"Message": "Validation error", "errors": err.messages}, 404
-        photo = Photo.query.get_or_404(id_photo)
+        photo = Photo.query.get_or_404(photo_id)
         for key, value in new_photo.items():
             setattr(photo, key, value)
         db.session.commit()
-        return self.photos_schema.dump(photo)
+        return self.photo_pacth_schema.dump(photo)
 
-    def delete(self, id_photo):
-        photo = Photo.query.get_or_404(id_photo)
+    def delete(self, photo_id):
+        photo = Photo.query.get_or_404(photo_id)
         db.session.delete(photo)
         db.session.commit()
         return {"Message": "Supprimé avec succès"}, 204
