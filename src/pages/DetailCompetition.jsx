@@ -44,7 +44,8 @@ const DetailCompetition = () => {
                 {
                 epreuves.map((ep) => (
                     <Card_epreuve key={ep.id} ep={ep} handleClick={handleClick}/>
-                ))}
+                ))
+                }
             </ul>
         </div>
         
