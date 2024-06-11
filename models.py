@@ -71,7 +71,7 @@ class Photo(Base):
     url_photo = Column(String, nullable=False)
     date_photo = Column(Date, nullable=False)
     heure_photo = Column(Time, nullable=False)
-    id_epreuve = Column(Integer, primary_key=True, nullable=False)
+    id_epreuve = Column(Integer, nullable=False)
 
 class Participant(Base):
     __tablename__ = 'participant'
