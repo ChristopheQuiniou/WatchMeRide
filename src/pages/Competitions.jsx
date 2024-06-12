@@ -28,8 +28,6 @@ const Competitions = () => {
 
     return (
         <div className='p-8'>
-
-
             <div className='grid grid-cols-2 gap-1'>
                     <form className="w-full py-auto">   
                         <label for="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Chercher</label>

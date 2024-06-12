@@ -32,7 +32,7 @@ const Card_photo = (props) => {
             </a>
             <div className="p-5">
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                    Lieu :
+                {props.photo.date_photo}
                 </p>
                 <a href={`/Cavalier/${props.photo.id_cavalier}`}>
                     <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
