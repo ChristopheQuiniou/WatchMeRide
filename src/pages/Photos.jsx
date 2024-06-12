@@ -122,7 +122,7 @@ const Photos = () => {
                         </div>
                     </form>
                     <ul className='grid grid-cols-2 gap-3'>
-                        {photos.map(photo => (
+                        {photos.map((photo) => (
                             <Card_photo photo={photo} />
                         ))}
                     </ul>
