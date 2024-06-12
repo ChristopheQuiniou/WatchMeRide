@@ -7,7 +7,7 @@ const Card = ({ competition, handleClick }) => {
         <li className=" bg-white border  rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 border-solid border-1 border-gray-600" onClick={() => handleClick(competition.id)}>
             <a href="">
                 <img 
-                className="rounded-t-lg filter grayscale hover:grayscale-0" 
+                className="rounded-t-lg filter grayscale hover:grayscale-0 min-h-[312px]" 
                 src={competition.Image}
                 alt={competition.nom} />
             </a>

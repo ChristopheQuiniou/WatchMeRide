@@ -118,21 +118,21 @@ const AjouterCompetition = () => {
                       className='grid grid-rows-6 grid-flow-col gap-4 pt-8 '>
                     <div className='grid grid-rows-2 grid-flow-col'>
                         <label>Dénomination</label>
-                        <input className='bg-white border border-gray-300 p-2 rounded-lg' type='text' name='nom'
+                        <input className='bg-white border border-gray-300 p-2 rounded-lg  focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500' type='text' name='nom'
                                value={formData.nom} onChange={handleChange} required/>
                     </div>
                     <div className='grid grid-rows-2 grid-flow-col'>
                         <label>Localisation</label>
-                        <input className='bg-white border border-gray-300  p-2 rounded-lg' type='location' name="lieu"
+                        <input className='bg-white border border-gray-300 p-2 rounded-lg  focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500' type='text' name='lieu'
                                value={formData.lieu} onChange={handleChange} required/>
                     </div>
                     <div className='grid grid-rows-2 grid-flow-col'>
                         <label>Image de couverture</label>
-                        <input className='bg-white border border-gray-300 rounded-lg ' type='file' onChange={handleFileChange} />
+                        <input className='bg-white border border-gray-300 rounded-lg  focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 ' type='file' name='Image' onChange={handleFileChange} />
                     </div>
                     <div className='grid grid-rows-2 grid-flow-col'>
                         <label>Liste des participants</label>
-                        <input className='bg-white border border-gray-300 rounded-lg ' type='file' onChange={handleParticipantsFileChange} />
+                        <input className='bg-white border border-gray-300 rounded-lg  focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 ' type='file' onChange={handleParticipantsFileChange} />
                     </div>
                     <div className="w-full grid grid-cols-2 gap-4">
                         <Loading msg={loadingMessage}></Loading>
@@ -141,11 +141,11 @@ const AjouterCompetition = () => {
                         <input
                             type='submit'
                             value='Ajouter la compétition'
-                            className='my-4 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 w-full'
+                            className='my-4 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-gray-800 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-900 w-full'
                         />
                         <button
                             type='reset'
-                            className='my-4 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 w-full'
+                            className='my-4 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-900 w-full'
                         >
                             Annuler
                         </button>

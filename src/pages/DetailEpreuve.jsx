@@ -57,7 +57,8 @@ const DetailEpreuve = () => {
             <div className='p-8 '>
                 <div>
                     <h1 className='text-3xl text-black font-bold pt-8 mb-2 '>
-                                Epreuve n°{epreuve.id} : {epreuve.nom}
+                                Epreuve n°{epreuve.id} : {epreuve.nom}  <br/>
+                                <span className='text-xl text-green-700 font-normal'>({participants.length} participants inscrits)</span>
                     </h1>
                     <div  className="flex items-center gap-2" >
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><path fill="currentColor" fill-rule="evenodd" stroke="currentColor" stroke-linejoin="round" stroke-width="4" d="M44 40.836c-4.893-5.973-9.238-9.362-13.036-10.168c-3.797-.805-7.412-.927-10.846-.365V41L4 23.545L20.118 7v10.167c6.349.05 11.746 2.328 16.192 6.833c4.445 4.505 7.009 10.117 7.69 16.836Z" clip-rule="evenodd"/></svg>
@@ -74,7 +75,7 @@ const DetailEpreuve = () => {
                                     </svg>
                                 </div>
                                 <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Rechercher un cavalier..." required />
-                                <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-blue-800">Chercher</button>
+                                <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Chercher</button>
                             </div>
                         </form>
                         <div className='my-auto flex flex-row-reverse '>
@@ -88,7 +89,7 @@ const DetailEpreuve = () => {
                     </div>
                 </div>
 
-                <ul>
+                <form>
                     {
                     
                         participants.map((participant,index)=> (
@@ -96,7 +97,7 @@ const DetailEpreuve = () => {
                         ))
 
                     } 
-                </ul>
+                </form>
             </div>
         </div>
         
