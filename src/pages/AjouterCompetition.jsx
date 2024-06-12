@@ -1,5 +1,6 @@
 import React, {useRef, useState} from 'react';
 import Card_compete from '../composants/Card_compete';
+import { useNavigate } from 'react-router-dom';
 import Image from '../assets/ImageAjoutP.png';
 import competitions from "./Competitions.jsx";
 import Loading from "../composants/Loading.jsx";
@@ -107,6 +108,11 @@ const AjouterCompetition = () => {
         }
     }
 
+    const navigate = useNavigate();
+    const handleRetour = () => {
+        navigate(-1);
+    };
+
 
     return (
         <div className='grid grid-cols-2 gap-4'>
@@ -144,10 +150,11 @@ const AjouterCompetition = () => {
                             className='my-4 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 w-full'
                         />
                         <button
+                            onClick={handleRetour}
                             type='reset'
                             className='my-4 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 w-full'
                         >
-                            Annuler
+                            Retour
                         </button>
                     </div>
                 </form>
