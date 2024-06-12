@@ -23,7 +23,7 @@ const Header = () => {
                                 </a>
                             </li>
                             <li>
-                                <a href="Photos" className="block py-2 px-3 text-white bg-green-700 rounded md:bg-transparent md:text-gray-700 md:p-0 dark:text-white md:dark:text-gray-900" aria-current="page">
+                                <a href="../Photos" className="block py-2 px-3 text-white bg-green-700 rounded md:bg-transparent md:text-gray-700 md:p-0 dark:text-white md:dark:text-gray-900" aria-current="page">
                                     Photos
                                 </a>
                             </li>
