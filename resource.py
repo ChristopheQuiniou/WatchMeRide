@@ -453,7 +453,7 @@ class PhotoResourceFilter(Resource):
     photos_list_schema = PhotoSchema(many=True)
     photo_pacth_schema = PhotoSchema(partial=True)
 
-    def get(self, photo_filer=None):
+    def post(self):
 
         filters = request.json
         if "id" in filters:
