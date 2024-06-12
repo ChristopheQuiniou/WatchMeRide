@@ -20,7 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Accueil/>} />
           <Route path="/Competitions" element={<Competitions/>} />
-          <Route path="/AjouterEpreuve" element={<AjouterEpreuve/>} />
+          <Route path="/AjouterEpreuve/:id" element={<AjouterEpreuve/>} />
           <Route path="/AjouterParticipant" element={<AjouterParticipant/>} />
           <Route path="/AjouterCompetition" element={<AjouterCompetition/>} />
           <Route path="/Photos" element={<Photos/>} />

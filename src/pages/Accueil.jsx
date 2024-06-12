@@ -6,7 +6,9 @@ import SecondPic from '../assets/SecondPic.png';
 
 
 const Accueil = () => {
-    
+
+
+
     return (
         <div className=''>
             <div className='w-full h-[600px] relative'>

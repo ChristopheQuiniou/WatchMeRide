@@ -35,7 +35,7 @@ const DetailCompetition = () => {
     return (
         <div className=''>
             {
-                <Hero comp={detailcompetition}/>
+                <Hero comp={detailcompetition} idCompetition={id} />
             }
             <h1 className='text-3xl p-5 font-medium'>Liste des épreuves</h1>
 
@@ -44,7 +44,8 @@ const DetailCompetition = () => {
                 {
                 epreuves.map((ep) => (
                     <Card_epreuve key={ep.id} ep={ep} handleClick={handleClick}/>
-                ))}
+                ))
+                }
             </ul>
         </div>
         
