@@ -16,32 +16,21 @@ const Card_participant = ({participant}) => {
                         <span className="text-sm text-black leading-6">{participant.cheval.nom} | {participant.cheval.race}</span>
                     </div>
                 </div>
-                <div className='grid grid-cols-2 gap-2'>
-                    <button
-                        className="bg-black text-white py-3 px-6 text-lg leading-5 tracking-tight font-semibold h-[44px] flex items-center">
-                            <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_201_899)">
-                            <path d="M2.5 0V20L18.2143 10L2.5 0Z" fill="white"/>
-                            </g>
-                            <defs>
-                            <clipPath id="clip0_201_899">
-                            <rect width="20" height="20" fill="white" transform="translate(0.5)"/>
-                            </clipPath>
-                            </defs>
-                            </svg>
-                        <span className='ms-4'>Demarrer</span>
-                    </button>
-                    <button
-                        className="bg-white text-[#858386] py-3 px-6 text-lg leading-5 tracking-tight font-semibold h-[44px] flex items-center border-[#858386] ">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="20" height="20" fill="#858386"/>
-                            </svg>
-
-                            <span className='ms-4'>Arrêter</span>
-                        
-                    </button>
-
+                <div className='flex items-center gap-2 bg-black text-white rounded-lg px-4 py-2'>
+                <label className='flex items-center' htmlFor='radio_demarrer'>
+                    <span className='w-6 h-6 rounded-full border-2 border-white flex items-center justify-center'>
+                    <input
+                        type='radio'
+                        className='appearance-none w-4 h-4 rounded-full bg-white checked:bg-white checked:border-4 checked:border-green-500'
+                        name='demarrer'
+                        id='radio_demarrer'
+                        value={participant.cavalier.id}
+                    />
+                    </span>
+                    <span className='ms-4'>Demarrer</span>
+                </label>
                 </div>
+
                 
             </div>
             <div className="py-1.5 inline-flex px-6 bg-[#858386] uppercase w-auto text-white">

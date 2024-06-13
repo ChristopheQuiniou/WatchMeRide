@@ -1,5 +1,6 @@
 import React, {useRef, useState} from 'react';
 import Card_compete from '../composants/Card_compete';
+import { useNavigate } from 'react-router-dom';
 import Image from '../assets/ImageAjoutP.png';
 import competitions from "./Competitions.jsx";
 import Loading from "../composants/Loading.jsx";
@@ -42,70 +43,69 @@ const AjouterCompetition = () => {
 
     const handleAddCompetiton = async (e) => {
         e.preventDefault();
-        const newId = new Date().getTime().toString();
-        const date = getCurrentFormattedDate();
-        const updatedFormData = { ...formData, id: newId,date: date };
+        // Upload image file
+        if (file) {
+            const newId = new Date().getTime().toString();
+            const date = getCurrentFormattedDate();
 
-        setLoadingMessage('Creation de la compétition');
+            const fileFormData = new FormData();
+            fileFormData.append('id', newId);
+            fileFormData.append('nom', formData.nom);
+            fileFormData.append('date', date);
+            fileFormData.append('lieu', formData.lieu);
+            fileFormData.append('Image', file);
 
-        const response = await fetch('http://89.81.6.81:5000/competitions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedFormData),
-        });
 
-        if (response.ok) {
-            const data = await response.json();
+            setLoadingMessage('Creation de la compétition');
 
-            // Upload image file
-            // if (file) {
-            //     const fileFormData = new FormData();
-            //     fileFormData.append('file', file);
-            //     fileFormData.append('competition_id', newId);
-            //
-            //     const fileResponse = await fetch('http://89.81.6.81:5000/uploadFile', {
-            //         method: 'POST',
-            //         body: fileFormData,
-            //     });
-            //
-            //     if (fileResponse.ok) {
-            //         const fileData = await fileResponse.json();
-            //         console.log('File Upload Success:', fileData);
-            //     } else {
-            //         console.error('File Upload Error:', fileResponse.statusText);
-            //     }
-            // }
+            const response = await fetch('http://89.81.6.81:5000/competitions', {
+                method: 'POST',
+                // headers: {
+                //     'Content-Type': 'application/json',
+                // },
+                body: fileFormData,
+            });
 
-            // Upload participants file (if any)
-            if (participantsFile) {
-                const participantsFormData = new FormData();
-                participantsFormData.append('file', participantsFile);
-                participantsFormData.append('competition_id', newId);
+            if (response.ok) {
+                const data = await response.json();
 
-                setLoadingMessage('Conversion du fichier PDF');
-                const participantsResponse = await fetch('http://89.81.6.81:5000/uploadFile', {
-                    method: 'POST',
-                    body: participantsFormData,
-                });
+                // Upload participants file (if any)
+                if (participantsFile) {
+                    const participantsFormData = new FormData();
+                    participantsFormData.append('file', participantsFile);
+                    participantsFormData.append('competition_id', newId);
 
-                if (participantsResponse.ok) {
-                    setLoadingMessage('Conversion et création de la compétition effectuée avec succès');
-                    const participantsData = await participantsResponse.json();
-                    console.log('Participants File Upload Success:', participantsData);
+                    setLoadingMessage('Conversion du fichier PDF');
+                    const participantsResponse = await fetch('http://89.81.6.81:5000/uploadFile', {
+                        method: 'POST',
+                        body: participantsFormData,
+                    });
+
+                    if (participantsResponse.ok) {
+                        setLoadingMessage('Conversion et création de la compétition effectuée avec succès');
+                        const participantsData = await participantsResponse.json();
+                        console.log('Participants File Upload Success:', participantsData);
+                    } else {
+                        setLoadingMessage('Erreur lors de la conversion du fichier PDF');
+                        console.error('Participants File Upload Error:', participantsResponse.statusText);
+                    }
                 } else {
-                    setLoadingMessage('Erreur lors de la conversion du fichier PDF');
-                    console.error('Participants File Upload Error:', participantsResponse.statusText);
+                    setLoadingMessage('Compétition créée : ' + newId);
                 }
             } else {
-                setLoadingMessage('Compétition créée : ' + newId);
+                setLoadingMessage('Erreur lors de la création de la compétition !');
+                console.error('Error:', response.statusText);
             }
         } else {
-            setLoadingMessage('Erreur lors de la création de la compétition !');
-            console.error('Error:', response.statusText);
+            setLoadingMessage('Image manquante !');
+
         }
     }
+
+    const navigate = useNavigate();
+    const handleRetour = () => {
+        navigate(-1);
+    };
 
 
     return (
@@ -118,21 +118,21 @@ const AjouterCompetition = () => {
                       className='grid grid-rows-6 grid-flow-col gap-4 pt-8 '>
                     <div className='grid grid-rows-2 grid-flow-col'>
                         <label>Dénomination</label>
-                        <input className='bg-white border border-gray-300 p-2 rounded-lg' type='text' name='nom'
+                        <input className='bg-white border border-gray-300 p-2 rounded-lg  focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500' type='text' name='nom'
                                value={formData.nom} onChange={handleChange} required/>
                     </div>
                     <div className='grid grid-rows-2 grid-flow-col'>
                         <label>Localisation</label>
-                        <input className='bg-white border border-gray-300  p-2 rounded-lg' type='location' name="lieu"
+                        <input className='bg-white border border-gray-300 p-2 rounded-lg  focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500' type='text' name='lieu'
                                value={formData.lieu} onChange={handleChange} required/>
                     </div>
                     <div className='grid grid-rows-2 grid-flow-col'>
                         <label>Image de couverture</label>
-                        <input className='bg-white border border-gray-300 rounded-lg ' type='file' onChange={handleFileChange} />
+                        <input className='bg-white border border-gray-300 rounded-lg  focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 ' type='file' name='Image' onChange={handleFileChange} />
                     </div>
                     <div className='grid grid-rows-2 grid-flow-col'>
                         <label>Liste des participants</label>
-                        <input className='bg-white border border-gray-300 rounded-lg ' type='file' onChange={handleParticipantsFileChange} />
+                        <input className='bg-white border border-gray-300 rounded-lg  focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 ' type='file' name='file' onChange={handleParticipantsFileChange} />
                     </div>
                     <div className="w-full grid grid-cols-2 gap-4">
                         <Loading msg={loadingMessage}></Loading>
@@ -141,13 +141,14 @@ const AjouterCompetition = () => {
                         <input
                             type='submit'
                             value='Ajouter la compétition'
-                            className='my-4 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 w-full'
+                            className='my-4 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-gray-800 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-900 w-full'
                         />
                         <button
+                            onClick={handleRetour}
                             type='reset'
-                            className='my-4 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 w-full'
+                            className='my-4 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-900 w-full'
                         >
-                            Annuler
+                            Retour
                         </button>
                     </div>
                 </form>
