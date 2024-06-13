@@ -43,68 +43,62 @@ const AjouterCompetition = () => {
 
     const handleAddCompetiton = async (e) => {
         e.preventDefault();
-        const newId = new Date().getTime().toString();
-        const date = getCurrentFormattedDate();
-        const updatedFormData = { ...formData, id: newId,date: date };
+        // Upload image file
+        if (file) {
+            const newId = new Date().getTime().toString();
+            const date = getCurrentFormattedDate();
 
-        setLoadingMessage('Creation de la compétition');
+            const fileFormData = new FormData();
+            fileFormData.append('id', newId);
+            fileFormData.append('nom', formData.nom);
+            fileFormData.append('date', date);
+            fileFormData.append('lieu', formData.lieu);
+            fileFormData.append('Image', file);
 
-        const response = await fetch('http://89.81.6.81:5000/competitions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedFormData),
-        });
 
-        if (response.ok) {
-            const data = await response.json();
+            setLoadingMessage('Creation de la compétition');
 
-            // Upload image file
-            // if (file) {
-            //     const fileFormData = new FormData();
-            //     fileFormData.append('file', file);
-            //     fileFormData.append('competition_id', newId);
-            //
-            //     const fileResponse = await fetch('http://89.81.6.81:5000/uploadFile', {
-            //         method: 'POST',
-            //         body: fileFormData,
-            //     });
-            //
-            //     if (fileResponse.ok) {
-            //         const fileData = await fileResponse.json();
-            //         console.log('File Upload Success:', fileData);
-            //     } else {
-            //         console.error('File Upload Error:', fileResponse.statusText);
-            //     }
-            // }
+            const response = await fetch('http://89.81.6.81:5000/competitions', {
+                method: 'POST',
+                // headers: {
+                //     'Content-Type': 'application/json',
+                // },
+                body: fileFormData,
+            });
 
-            // Upload participants file (if any)
-            if (participantsFile) {
-                const participantsFormData = new FormData();
-                participantsFormData.append('file', participantsFile);
-                participantsFormData.append('competition_id', newId);
+            if (response.ok) {
+                const data = await response.json();
 
-                setLoadingMessage('Conversion du fichier PDF');
-                const participantsResponse = await fetch('http://89.81.6.81:5000/uploadFile', {
-                    method: 'POST',
-                    body: participantsFormData,
-                });
+                // Upload participants file (if any)
+                if (participantsFile) {
+                    const participantsFormData = new FormData();
+                    participantsFormData.append('file', participantsFile);
+                    participantsFormData.append('competition_id', newId);
 
-                if (participantsResponse.ok) {
-                    setLoadingMessage('Conversion et création de la compétition effectuée avec succès');
-                    const participantsData = await participantsResponse.json();
-                    console.log('Participants File Upload Success:', participantsData);
+                    setLoadingMessage('Conversion du fichier PDF');
+                    const participantsResponse = await fetch('http://89.81.6.81:5000/uploadFile', {
+                        method: 'POST',
+                        body: participantsFormData,
+                    });
+
+                    if (participantsResponse.ok) {
+                        setLoadingMessage('Conversion et création de la compétition effectuée avec succès');
+                        const participantsData = await participantsResponse.json();
+                        console.log('Participants File Upload Success:', participantsData);
+                    } else {
+                        setLoadingMessage('Erreur lors de la conversion du fichier PDF');
+                        console.error('Participants File Upload Error:', participantsResponse.statusText);
+                    }
                 } else {
-                    setLoadingMessage('Erreur lors de la conversion du fichier PDF');
-                    console.error('Participants File Upload Error:', participantsResponse.statusText);
+                    setLoadingMessage('Compétition créée : ' + newId);
                 }
             } else {
-                setLoadingMessage('Compétition créée : ' + newId);
+                setLoadingMessage('Erreur lors de la création de la compétition !');
+                console.error('Error:', response.statusText);
             }
         } else {
-            setLoadingMessage('Erreur lors de la création de la compétition !');
-            console.error('Error:', response.statusText);
+            setLoadingMessage('Image manquante !');
+
         }
     }
 
