@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from tkinter import Image
 
@@ -88,16 +89,27 @@ class CompetitionResource(Resource):
             return self.competition_list_schema.dump(all_competitions)
 
     def post(self):
-        try:
-            new_competition_data = self.competition_schema.load(request.json)
-        except ValidationError as err:
-            return {"Message": "Validation error", "errors": err.messages}, 404
+        filesServerLink = "https://46da-2001-861-3dc8-ea0-91e-9910-1307-a6ac.ngrok-free.app"
+        #try:
+            #new_competition_data = self.competition_schema.load(request.json)
+        #except ValidationError as err:
+            #return {"Message": "Validation error", "errors": err.messages}, 404
+
+        filename = ""
+        if 'Image' in request.files:
+
+            file = request.files['Image']
+
+            if file.filename != '':
+                file.save(os.path.join('storage', file.filename))
+
+
         new_competition = Competition(
-            id=new_competition_data['id'],
-            nom=new_competition_data['nom'],
-            date=new_competition_data['date'],
-            lieu=new_competition_data['lieu'],
-            Image=new_competition_data['Image']
+            id=request.form['id'],
+            nom=request.form['nom'],
+            date=request.form['date'],
+            lieu=request.form['lieu'],
+            Image=filesServerLink+"/"+file.filename
         )
         db.session.add(new_competition)
         db.session.commit()
@@ -467,7 +479,9 @@ class PhotoResourceFilter(Resource):
                 return self.photos_list_schema.dump(photo)
         elif "cavalier" in filters:
                 cavalier = Cavalier.query.filter(Cavalier.fullname == filters['cavalier']).first()
-                photo = Photo.query.filter(Photo.id_cavalier == cavalier.id)
+                if cavalier is not None:
+                    photo = Photo.query.filter(Photo.id_cavalier == cavalier.id)
+
                 return self.photos_list_schema.dump(photo)
         else:
             all_photo = Photo.query.all()

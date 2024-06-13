@@ -1,7 +1,7 @@
 import pandas as pd
 import re
-import fitz
 import os
+import fitz
 
 from flask import request
 from flask_restful import Resource

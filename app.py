@@ -3,11 +3,15 @@ from flask import Flask, render_template
 from flask_restful import Api
 from flask_migrate import Migrate
 from flask_cors import CORS, cross_origin
+from werkzeug.datastructures import FileStorage
+
 from functions.uploadFile import uploadFileResource
 from models import db, Cavalier
 from resource import CavalierResource, CompetitionResource, ClubResource, ChevalResource, CoachResource, \
     EpreuveResource, PhotoResource, PhotoResourceFilter, ParticipantResource, CompetByEpreuveResource, ParticipantsByEpreuveResource
 from schemas import ma
+import re
+import os
 import requests
 
 
@@ -24,6 +28,7 @@ api = Api(app)
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 api.add_resource(CavalierResource, '/cavaliers', '/cavaliers/<int:cavalier_id>')
 api.add_resource(CompetitionResource, '/competitions', '/competitions/<int:competition_id>')
