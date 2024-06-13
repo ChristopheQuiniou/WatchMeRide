@@ -89,7 +89,7 @@ class CompetitionResource(Resource):
             return self.competition_list_schema.dump(all_competitions)
 
     def post(self):
-        filesServerLink = "https://46da-2001-861-3dc8-ea0-91e-9910-1307-a6ac.ngrok-free.app"
+        filesServerLink = "http://89.81.6.81:8000"
         #try:
             #new_competition_data = self.competition_schema.load(request.json)
         #except ValidationError as err:
@@ -425,8 +425,8 @@ class PhotoResource(Resource):
             id_photo = new_photo['id_photo'],
             id_cavalier = new_photo['id_cavalier'],
             url_photo = new_photo['url_photo'],
-            date_photo = new_photo['date_photo'],
-            heure_photo = new_photo['heure_photo'],
+            date_photo = datetime.now().strftime("%d/%m/%Y"),
+            heure_photo = datetime.now().strftime("%H:%M"),
             id_epreuve = new_photo['id_epreuve'],
         )
         db.session.add(new_photo)
