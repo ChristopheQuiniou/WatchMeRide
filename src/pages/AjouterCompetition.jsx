@@ -132,7 +132,7 @@ const AjouterCompetition = () => {
                     </div>
                     <div className='grid grid-rows-2 grid-flow-col'>
                         <label>Liste des participants</label>
-                        <input className='bg-white border border-gray-300 rounded-lg  focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 ' type='file' onChange={handleParticipantsFileChange} />
+                        <input className='bg-white border border-gray-300 rounded-lg  focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 ' type='file' name='file' onChange={handleParticipantsFileChange} />
                     </div>
                     <div className="w-full grid grid-cols-2 gap-4">
                         <Loading msg={loadingMessage}></Loading>
